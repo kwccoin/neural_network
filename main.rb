@@ -4,28 +4,28 @@ class NeuralNetwork
   def initialize(x, hidden)
     @math = MathLibs.new
     @hidden = hidden
-    h = Array.new(@hidden) {Array.new(x.size)}
-    for i in 0...h.size
-      for j in 0...h[i].size
-        h[i][j] = Random.rand(-1.0...1.0)
+    @h = Array.new(@hidden) {Array.new(x.size)}
+    for i in 0...@h.size
+      for j in 0...@h[i].size
+        @h[i][j] = Random.rand(-1.0...1.0)
       end
     end
-    c = Array.new(@hidden) {Array.new(x.size)}
-    for i in 0...c.size
-      for j in 0...c[i].size
-        c[i][j] = Random.rand(-1.0...1.0)
+    @c = Array.new(@hidden) {Array.new(x.size)}
+    for i in 0...@c.size
+      for j in 0...@c[i].size
+        @c[i][j] = Random.rand(-1.0...1.0)
       end
     end
-    layers(x, h, c)
+    layers(x)
   end
-  def layers(x, h, c)
+  def layers(x)
     for i in 0...@hidden
       if i + 1 < @hidden
-        array = cell(x, h[i], c[i])
-        h[i + 1] = array[0]
-        c[i + 1] = array[1]
+        array = cell(x, @h[i], @c[i])
+        @h[i + 1] = array[0]
+        @c[i + 1] = array[1]
       else
-        puts h[i]
+        puts @h[i]
       end
     end
   end

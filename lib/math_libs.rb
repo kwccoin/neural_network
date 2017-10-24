@@ -6,7 +6,7 @@ class MathLibs
         result[i] = vector1[i] + vector2[i]
       end
     else
-      puts 'ERROR ADD: Vectors size is not equal.'
+      # puts 'ERROR ADD: Vectors size is not equal.'
     end
     result
   end
@@ -17,7 +17,7 @@ class MathLibs
         result[i] = vector1[i] * vector2[i]
       end
     else
-      puts 'ERROR MULT: Vectors size is not equal.'
+      # puts 'ERROR MULT: Vectors size is not equal.'
     end
     result
   end
