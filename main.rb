@@ -1,16 +1,16 @@
 require './lib/math_libs'
 
 class NeuralNetwork
-  def initialize(x, hidden)
+  def initialize(x)
     @math = MathLibs.new
-    @hidden = hidden
-    @h = Array.new(@hidden) {Array.new(x.size)}
+    @units = x.size
+    @h = Array.new(@units) {Array.new(x.first.size)}
     for i in 0...@h.size
       for j in 0...@h[i].size
         @h[i][j] = Random.rand(-1.0...1.0)
       end
     end
-    @c = Array.new(@hidden) {Array.new(x.size)}
+    @c = Array.new(@units) {Array.new(x.first.size)}
     for i in 0...@c.size
       for j in 0...@c[i].size
         @c[i][j] = Random.rand(-1.0...1.0)
@@ -19,13 +19,14 @@ class NeuralNetwork
     layers(x)
   end
   def layers(x)
-    for i in 0...@hidden
-      if i + 1 < @hidden
-        array = cell(x, @h[i], @c[i])
-        @h[i + 1] = array[0]
-        @c[i + 1] = array[1]
-      else
-        puts @h[i]
+    for i in 0...@units
+      for j in 0...x[i].size
+        if i + 1 < @units
+          array = cell(x, @h[i], @c[i])
+          @h[i + 1] = array[0]
+          @c[i + 1] = array[1]
+          p @h[i]
+        end
       end
     end
   end
@@ -74,5 +75,5 @@ class NeuralNetwork
   end
 end
 
-x = [1.0, 0.6, 0.2, 0.7, 0.9, 0.0]
-NeuralNetwork.new(x, 10)
+x = [[1.0, 0.6, 0.2, 0.7, 0.9, 0.0], [0.3, 0.1, 1.0, 0.5, 0.2, 0.7]]
+NeuralNetwork.new(x)
