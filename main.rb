@@ -16,7 +16,9 @@ class NeuralNetwork
         @c[i][j] = Random.rand(-1.0...1.0)
       end
     end
-    layers(x)
+    100.times do
+      layers(x)
+    end
   end
   def layers(x)
     for i in 0...@units
@@ -76,5 +78,5 @@ class NeuralNetwork
   end
 end
 
-x = [[1.0, 0.6, 0.2, 0.7, 0.9, 0.0], [0.3, 0.1, 1.0, 0.5, 0.2, 0.7], [0.1, 0.2, 0.3, 0.4, 0.5, 0.6]]
+x = [[1.0, 0.6, 0.2, 0.7, 0.9, 0.0], [0.3, 0.1, 1.0, 0.5, 0.2, 0.0], [0.1, 0.2, 0.3, 0.4, 0.5, 0.0]]
 NeuralNetwork.new(x)
