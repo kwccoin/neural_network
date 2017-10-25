@@ -1,36 +1,45 @@
 require './lib/math_libs'
+require './lib/text_utils'
 
 class NeuralNetwork
-  def initialize(x)
+  def initialize
     @math = MathLibs.new
-    @units = x.size
-    @h = Array.new(@units) {Array.new(x.first.size)}
+  end
+  def train(x)
+    @h = Array.new(x.size) {Array.new(x.first.size)}
     for i in 0...@h.size
       for j in 0...@h[i].size
         @h[i][j] = Random.rand(-1.0...1.0)
       end
     end
-    @c = Array.new(@units) {Array.new(x.first.size)}
+    @c = Array.new(x.size) {Array.new(x.first.size)}
     for i in 0...@c.size
       for j in 0...@c[i].size
         @c[i][j] = Random.rand(-1.0...1.0)
       end
     end
-    100.times do
-      layers(x)
+    100.times do |time|
+      layers_train(x)
+    end
+    @h
+  end
+  def predict(x)
+    @y = Array.new
+    layers_predict(x)
+    @y
+  end
+  def layers_train(x)
+    for i in 0...x.size
+      array = cell(x[i], @h[i], @c[i])
+      if i + 1 < x.size
+        @h[i + 1] = array[0]
+        @c[i + 1] = array[1]
+      end
     end
   end
-  def layers(x)
-    for i in 0...@units
-      for j in 0...x[i].size
-        if i + 1 < @units
-          array = cell(x[i], @h[j], @c[j])
-          @h[j + 1] = array[0]
-          @c[j + 1] = array[1]
-          p [i, j]
-          p @h[j]
-        end
-      end
+  def layers_predict(x)
+    for i in 0...x.size
+      @y[i] = cell(x[i], @h.last, @c.last)[0]
     end
   end
   def cell(x, h, c)
@@ -78,5 +87,16 @@ class NeuralNetwork
   end
 end
 
-x = [[1.0, 0.6, 0.2, 0.7, 0.9, 0.0], [0.3, 0.1, 1.0, 0.5, 0.2, 0.0], [0.1, 0.2, 0.3, 0.4, 0.5, 0.0]]
-NeuralNetwork.new(x)
+text = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'
+util = TextUtils.new
+util.read_text(text)
+x1 = util.one_hot_vector
+text = 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.'
+util = TextUtils.new
+util.read_text(text)
+x2 = util.one_hot_vector
+nn = NeuralNetwork.new
+w = nn.train(x1)
+y = nn.predict(x2)
+
+p util.result_to_string(y)

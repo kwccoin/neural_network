@@ -3,10 +3,10 @@ class MathLibs
     result = Array.new
     if vector1.size == vector2.size
       for i in 0...vector1.size
-        result[i] = vector1[i] + vector2[i]
+        result[i] = vector1[i] + vector2[i] + 1.0
       end
     else
-      # puts 'ERROR ADD: Vectors size is not equal.'
+      puts 'ERROR ADD: Vectors size is not equal.'
     end
     result
   end
@@ -14,10 +14,10 @@ class MathLibs
     result = Array.new
     if vector1.size == vector2.size
       for i in 0...vector1.size
-        result[i] = vector1[i] * vector2[i]
+        result[i] = vector1[i] * vector2[i] + 1.0
       end
     else
-      # puts 'ERROR MULT: Vectors size is not equal.'
+      puts 'ERROR MULT: Vectors size is not equal.'
     end
     result
   end
@@ -26,10 +26,10 @@ class MathLibs
   end
   def rectifier_function(vector)
     vector.map do |x|
-      if x < 0.0
+      if x <= 0.0
         x = 0.0
       else
-        x
+        x = x
       end
     end
   end
