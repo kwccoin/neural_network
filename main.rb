@@ -22,10 +22,11 @@ class NeuralNetwork
     for i in 0...@units
       for j in 0...x[i].size
         if i + 1 < @units
-          array = cell(x, @h[i], @c[i])
-          @h[i + 1] = array[0]
-          @c[i + 1] = array[1]
-          p @h[i]
+          array = cell(x[i], @h[j], @c[j])
+          @h[j + 1] = array[0]
+          @c[j + 1] = array[1]
+          p [i, j]
+          p @h[j]
         end
       end
     end
@@ -75,5 +76,5 @@ class NeuralNetwork
   end
 end
 
-x = [[1.0, 0.6, 0.2, 0.7, 0.9, 0.0], [0.3, 0.1, 1.0, 0.5, 0.2, 0.7]]
+x = [[1.0, 0.6, 0.2, 0.7, 0.9, 0.0], [0.3, 0.1, 1.0, 0.5, 0.2, 0.7], [0.1, 0.2, 0.3, 0.4, 0.5, 0.6]]
 NeuralNetwork.new(x)
