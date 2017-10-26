@@ -3,7 +3,7 @@ class MathLibs
     result = Array.new
     if vector1.size == vector2.size
       for i in 0...vector1.size
-        result[i] = vector1[i] + vector2[i] + 1.0
+        result[i] = vector1[i] + vector2[i]
       end
     else
       puts 'ERROR ADD: Vectors size is not equal.'
@@ -14,7 +14,7 @@ class MathLibs
     result = Array.new
     if vector1.size == vector2.size
       for i in 0...vector1.size
-        result[i] = vector1[i] * vector2[i] + 1.0
+        result[i] = vector1[i] * vector2[i]
       end
     else
       puts 'ERROR MULT: Vectors size is not equal.'
